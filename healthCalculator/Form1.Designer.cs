@@ -102,6 +102,7 @@
             this.WeightTextBox.Name = "WeightTextBox";
             this.WeightTextBox.Size = new System.Drawing.Size(87, 27);
             this.WeightTextBox.TabIndex = 12;
+            this.WeightTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WeightTextBox_KeyPress);
             // 
             // HeightTextBox
             // 
@@ -110,6 +111,7 @@
             this.HeightTextBox.Name = "HeightTextBox";
             this.HeightTextBox.Size = new System.Drawing.Size(87, 27);
             this.HeightTextBox.TabIndex = 11;
+            this.HeightTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HeightTextBox_KeyPress);
             // 
             // GenderComboBox
             // 
@@ -130,6 +132,7 @@
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(87, 27);
             this.NameTextBox.TabIndex = 9;
+            this.NameTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NameTextBox_KeyPress);
             // 
             // clearButton
             // 

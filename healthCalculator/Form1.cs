@@ -75,10 +75,38 @@ namespace healthCalculator
         {
             stud[stuNum].id = stuNum + 1;
             stud[stuNum].name = NameTextBox.Text;
+
+            if (string.IsNullOrEmpty(stud[stuNum].name) || string.IsNullOrWhiteSpace(stud[stuNum].name))
+            {
+                MessageBox.Show("無效的姓名");
+                return;
+            }
             stud[stuNum].gender = GenderComboBox.Text;
             stud[stuNum].cla = ClassComboBox.Text;
-            stud[stuNum].height = Convert.ToInt32(HeightTextBox.Text);
-            stud[stuNum].weight = Convert.ToInt32(WeightTextBox.Text);
+
+            try
+            {
+                stud[stuNum].height = Convert.ToSingle(HeightTextBox.Text);
+            }
+            catch
+            {
+                if (stud[stuNum].height == 0)
+                {
+                    MessageBox.Show("體重輸入錯誤");
+                    return;
+                }
+            }
+
+            try
+            {
+                stud[stuNum].weight = Convert.ToSingle(WeightTextBox.Text);
+            }
+            catch
+            {
+                MessageBox.Show("身高輸入錯誤");
+                return;
+            }
+
             stud[stuNum].bmi = BMI(stud[stuNum].height, stud[stuNum].weight);
 
             DetermineClassNum(stud, "A班", stuNumA, classAMaxNum);
@@ -200,6 +228,30 @@ namespace healthCalculator
         }
         #endregion
 
+        #region 輸入方式鎖定
+        private void OnlyInputLiteral(KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void OnlyInputNum(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            {
+                e.Handled = true;
+            }
+
+            if (e.KeyChar == '.' && (sender as TextBox).Text.IndexOf('.') > -1)
+            {
+                e.Handled = true;
+            }
+        }
+        #endregion
+
+        #region 表單按鈕及輸入區塊
         private void addButton_Click(object sender, EventArgs e)
         {
             if (stuNum + 1 > MAXNUM)
@@ -222,6 +274,20 @@ namespace healthCalculator
             Cipher();
         }
 
+        private void NameTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            OnlyInputLiteral(e);
+        }
 
+        private void HeightTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            OnlyInputNum(sender,e);
+        }
+
+        private void WeightTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            OnlyInputNum(sender,e);
+        }
+        #endregion
     }
 }
